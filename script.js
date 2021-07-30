@@ -16,13 +16,18 @@ const paddleHeight = 10;
 const paddleWidth = 50;
 
 // Paddle position 
-let paddleBottomX = 225;
-let paddleTopX = 225;
+let paddleComputerX = 225; 
+let paddlePlayerX = 225;  
 
 // Ball
 let ballX = 250;
 let ballY = 350;
 const ballRadius = 5;
+
+// Score
+let computerScore = 0;
+let playerScore = 0;
+
 
 
 /**
@@ -33,14 +38,10 @@ function renderCanvas() {
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvasWidth, canvasHeight); // fillRect(x, y, width, height)
 
-  // Paddle Color
+  // Paddles
   ctx.fillStyle = 'white';
-
-  // Paddle Top (Computer)
-  ctx.fillRect(paddleTopX, 10, paddleWidth, paddleHeight);
-
-  // Paddle Bottom (Player)
-  ctx.fillRect(paddleBottomX, canvasHeight - 20, paddleWidth, paddleHeight);
+  ctx.fillRect(paddleComputerX, 10, paddleWidth, paddleHeight);               // Paddle Top (Computer)
+  ctx.fillRect(paddlePlayerX, canvasHeight - 20, paddleWidth, paddleHeight);  // Paddle Bottom (Player)
 
   // Dashed Center Line
   ctx.beginPath();
@@ -55,6 +56,11 @@ function renderCanvas() {
   ctx.arc(ballX, ballY, ballRadius, 2 * Math.PI, false);
   ctx.fillStyle = 'white';
   ctx.fill();
+
+  // Score
+  ctx.font = '32px Courier New';
+  ctx.fillText(computerScore, 20, canvas.height / 2 - 30);  // Score Top (Computer)
+  ctx.fillText(playerScore, 20, canvas.height / 2 + 50);    // Score Bottom (Player)
 
 }
 
