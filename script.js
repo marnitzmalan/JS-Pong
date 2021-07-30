@@ -19,10 +19,17 @@ const paddleWidth = 50;
 let paddleComputerX = 225; 
 let paddlePlayerX = 225;  
 
+// Player
+let playerMoved = false;
+
 // Ball
 let ballX = 250;
 let ballY = 350;
 const ballRadius = 5;
+
+// Speed
+let speedY = -3;
+let speedX;
 
 // Score
 let computerScore = 0;
@@ -76,6 +83,41 @@ function createCanvas() {
 }
 
 
+
+// /**
+//  *  Reset Ball to Center
+//  */
+// function ballReset() {
+//   ballX = width / 2;
+//   ballY = height / 2;
+//   speedY = -3;
+//   paddleContact = false;
+// }
+
+/**
+ * Adjust Ball Movement
+ */
+function ballMove() {
+  // Vertical Speed
+  ballY += -speedY;
+  // // Horizontal Speed
+  // if (playerMoved && paddleContact) {
+  //   ballX += speedX;
+  // }
+}
+
+
+/**
+ * Called Every Frame
+ */
+function animate() {
+  renderCanvas();
+  ballMove();
+  // ballBoundaries();
+  // computerAI();
+}
+
+
 /**
  * Start Game, Reset Everything
  */
@@ -88,8 +130,13 @@ function startGame() {
   createCanvas();
   // animate();
 
+  // animate at 60 fps
+  setInterval(animate, 1000/60); 
+
   canvas.addEventListener('mousemove', (e) => {
-    console.log(e.clientX);
+    playerMoved = true;
+
+
   })
 
 }
