@@ -5,7 +5,7 @@
 // Canvas
 const { body } = document;
 const canvas = document.createElement('canvas');
-const context = canvas.getContext('2d');
+const ctx = canvas.getContext('2d');
 
 // Canvas Size
 const canvasWidth = 500;
@@ -15,7 +15,7 @@ const canvasHeight = 700;
 const paddleHeight = 10;
 const paddleWidth = 50;
 
-// Paddle position
+// Paddle position 
 let paddleBottomX = 225;
 let paddleTopX = 225;
 
@@ -25,17 +25,27 @@ let paddleTopX = 225;
  */
 function renderCanvas() {
   // Canvas Background
-  context.fillStyle = 'black';
-  context.fillRect(0, 0, canvasWidth, canvasHeight); // fillRect(x, y, width, height)
+  ctx.fillStyle = 'black';
+  ctx.fillRect(0, 0, canvasWidth, canvasHeight); // fillRect(x, y, width, height)
 
   // Paddle Color
-  context.fillStyle = 'white';
+  ctx.fillStyle = 'white';
 
   // Paddle Top (Computer)
-  context.fillRect(paddleTopX, 10, paddleWidth, paddleHeight);
+  ctx.fillRect(paddleTopX, 10, paddleWidth, paddleHeight);
 
   // Paddle Bottom (Player)
-  context.fillRect(paddleBottomX, canvasHeight - 20, paddleWidth, paddleHeight);
+  ctx.fillRect(paddleBottomX, canvasHeight - 20, paddleWidth, paddleHeight);
+
+  // Dashed Center Line
+  ctx.beginPath();
+  ctx.strokeStyle = 'grey';
+  ctx.moveTo(0, 350);
+  ctx.lineTo(500, 350);
+  ctx.setLineDash([4]);
+  ctx.stroke();
+
+
 }
 
 
