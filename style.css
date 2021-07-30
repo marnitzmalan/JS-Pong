@@ -6,6 +6,7 @@ body {
   font-family: "Courier New", Courier, monospace;
 }
 
-#my-house {
-  background-color: antiquewhite;
+canvas {
+  margin-top: 25px;
+  z-index: 10;
 }
