@@ -75,5 +75,24 @@ function createCanvas() {
   renderCanvas();
 }
 
-// TODO: remove this
-createCanvas();
+
+/**
+ * Start Game, Reset Everything
+ */
+function startGame() {
+
+  computerScore = 0;
+  playerScore = 0;
+
+  // ballReset();
+  createCanvas();
+  // animate();
+
+  canvas.addEventListener('mousemove', (e) => {
+    console.log(e.clientX);
+  })
+
+}
+
+// On Load
+startGame();
