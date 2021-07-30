@@ -10,6 +10,8 @@ const ctx = canvas.getContext('2d');
 // Canvas Size
 const canvasWidth = 500;
 const canvasHeight = 700;
+const screenWidth = window.screen.width;
+const canvasPosition = screenWidth / 2 - canvasWidth / 2;
 
 // Paddle Size
 const paddleHeight = 10;
@@ -19,8 +21,9 @@ const paddleWidth = 50;
 let paddleComputerX = 225; 
 let paddlePlayerX = 225;  
 
-// Player
+// Player Controls
 let playerMoved = false;
+let paddleContact = true;
 
 // Ball
 let ballX = 250;
@@ -98,12 +101,20 @@ function createCanvas() {
  * Adjust Ball Movement
  */
 function ballMove() {
-  // Vertical Speed
-  ballY += -speedY;
-  // // Horizontal Speed
+  // // Vertical Speed
+  // ballY += -speedY;
+  // // // Horizontal Speed
   // if (playerMoved && paddleContact) {
   //   ballX += speedX;
   // }
+}
+
+
+/**
+ * Determine What Ball Bounces Off, Score Points, Reset Ball
+ */
+function ballBoundaries() {
+  
 }
 
 
@@ -135,7 +146,8 @@ function startGame() {
 
   canvas.addEventListener('mousemove', (e) => {
     playerMoved = true;
-
+     // Compensate for canvas being centered
+    paddlePlayerX = e.clientX - canvasPosition + 10;
 
   })
 
