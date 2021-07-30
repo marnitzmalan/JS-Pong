@@ -19,6 +19,11 @@ const paddleWidth = 50;
 let paddleBottomX = 225;
 let paddleTopX = 225;
 
+// Ball
+let ballX = 250;
+let ballY = 350;
+const ballRadius = 5;
+
 
 /**
  * Render Everything on Canvas 
@@ -45,6 +50,11 @@ function renderCanvas() {
   ctx.setLineDash([4]);
   ctx.stroke();
 
+  // Ball
+  ctx.beginPath();
+  ctx.arc(ballX, ballY, ballRadius, 2 * Math.PI, false);
+  ctx.fillStyle = 'white';
+  ctx.fill();
 
 }
 
