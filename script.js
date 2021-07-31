@@ -32,7 +32,7 @@ let ballY = 350;
 const ballRadius = 5;
 
 // Speed
-let speedY = -3;
+let speedY;
 let speedX;
 let trajectoryX;
 let computerSpeed;
@@ -41,6 +41,11 @@ let computerSpeed;
 let computerScore = 0;
 let playerScore = 0;
 
+
+// Set init speed
+speedY = -1;
+speedX = speedY;
+computerSpeed = 3;
 
 
 /**
@@ -98,7 +103,6 @@ function ballReset() {
   ballY = canvasHeight / 2;
   speedY = -3;
   paddleContact = false;
-  console.log('ball reset')
 }
 
 /**
@@ -176,6 +180,19 @@ function ballBoundaries() {
 }
 
 
+/**
+ * Computer Movement
+ */
+function computerAI() {
+  if (playerMoved) {
+    if (paddleComputerX + paddleDiff < ballX) {
+      paddleComputerX += computerSpeed;
+    } else {
+      paddleComputerX -= computerSpeed;
+    }
+  }
+}
+
 
 /**
  * Called Every Frame
@@ -184,8 +201,11 @@ function animate() {
   renderCanvas();
   ballMove();
   ballBoundaries();
-  // computerAI();
+  computerAI();
   window.requestAnimationFrame(animate);
+
+  console.log(paddleComputerX)
+
 }
 
 
@@ -193,11 +213,10 @@ function animate() {
  * Start Game, Reset Everything
  */
 function startGame() {
-
   computerScore = 0;
   playerScore = 0;
 
-  // ballReset();
+  ballReset();
   createCanvas();
   animate();
 
@@ -208,6 +227,9 @@ function startGame() {
 
     if (paddlePlayerX < paddleDiff) {
       paddlePlayerX = 0;
+    }
+    if (paddlePlayerX > canvasWidth - paddleWidth) {
+      paddlePlayerX = canvasWidth - paddleWidth;
     }
 
   })
