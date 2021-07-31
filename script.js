@@ -94,10 +94,11 @@ function createCanvas() {
 //  *  Reset Ball to Center
 //  */
 function ballReset() {
-//   ballX = width / 2;
-//   ballY = height / 2;
-//   speedY = -3;
+  ballX = canvasWidth / 2;
+  ballY = canvasHeight / 2;
+  speedY = -3;
   paddleContact = false;
+  console.log('ball reset')
 }
 
 /**
@@ -136,7 +137,7 @@ function ballBoundaries() {
       speedY = -speedY;
       trajectoryX = ballX - (paddlePlayerX + paddleDiff);
       speedX = trajectoryX * 0.3;
-    } else if (ballY > height) {
+    } else if (ballY > canvasHeight) {
       // Reset Ball, add to Computer Score
       ballReset();
       computerScore++;
