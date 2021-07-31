@@ -166,14 +166,11 @@ function ballBoundaries() {
   if (ballX < 0 && speedX < 0) {
     speedX = -speedX;
   }
-  
 
-  console.log(speedX);
   // Bounce off Right Wall
   if (ballX > canvasWidth && speedX > 0) {
     speedX = -speedX;
   }
-  
 
 }
 
@@ -187,6 +184,7 @@ function animate() {
   ballMove();
   ballBoundaries();
   // computerAI();
+  window.requestAnimationFrame(animate);
 }
 
 
@@ -201,9 +199,6 @@ function startGame() {
   // ballReset();
   createCanvas();
   animate();
-
-  // animate at 60 fps
-  setInterval(animate, 1000/60); 
 
   canvas.addEventListener('mousemove', (e) => {
     playerMoved = true;
