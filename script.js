@@ -110,6 +110,8 @@ function ballMove() {
   if (playerMoved && paddleContact) {
     ballX += speedX;
   }
+
+  
 }
 
 
@@ -160,6 +162,18 @@ function ballBoundaries() {
     }
   }
 
+  // Bounce off Left Wall
+  if (ballX < 0 && speedX < 0) {
+    speedX = -speedX;
+  }
+  
+
+  console.log(speedX);
+  // Bounce off Right Wall
+  if (ballX > canvasWidth && speedX > 0) {
+    speedX = -speedX;
+  }
+  
 
 }
 
@@ -192,13 +206,13 @@ function startGame() {
   setInterval(animate, 1000/60); 
 
   canvas.addEventListener('mousemove', (e) => {
-    // playerMoved = true;
+    playerMoved = true;
      // Compensate for canvas being centered
-    // paddlePlayerX = e.clientX - canvasPosition - paddleDiff;
+    paddlePlayerX = e.clientX - canvasPosition - paddleDiff;
 
-    // if (paddlePlayerX < paddleDiff) {
-    //   paddlePlayerX = 0;
-    // }
+    if (paddlePlayerX < paddleDiff) {
+      paddlePlayerX = 0;
+    }
 
   })
 
