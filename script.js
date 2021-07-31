@@ -6,6 +6,7 @@
 const { body } = document;
 const canvas = document.createElement('canvas');
 const ctx = canvas.getContext('2d');
+const gameOverEl = document.createElement('div');
 
 // Canvas Size
 const canvasWidth = 500;
@@ -32,20 +33,17 @@ let ballY = 350;
 const ballRadius = 5;
 
 // Speed
-let speedY;
-let speedX;
+let speedY = -1;
+let speedX = speedY;
 let trajectoryX;
-let computerSpeed;
+let computerSpeed = 3;
 
 // Score
 let computerScore = 0;
 let playerScore = 0;
-
-
-// Set init speed
-speedY = -1;
-speedX = speedY;
-computerSpeed = 3;
+const winningScore = 3;
+let isGameOver = true;
+let isNewGame = true;
 
 
 /**
@@ -79,7 +77,6 @@ function renderCanvas() {
   ctx.font = '32px Courier New';
   ctx.fillText(computerScore, 20, canvas.height / 2 - 30);  // Score Top (Computer)
   ctx.fillText(playerScore, 20, canvas.height / 2 + 50);    // Score Bottom (Player)
-
 }
 
 
@@ -94,7 +91,6 @@ function createCanvas() {
 }
 
 
-
 // /**
 //  *  Reset Ball to Center
 //  */
@@ -104,6 +100,7 @@ function ballReset() {
   speedY = -3;
   paddleContact = false;
 }
+
 
 /**
  * Adjust Ball Movement
@@ -115,8 +112,6 @@ function ballMove() {
   if (playerMoved && paddleContact) {
     ballX += speedX;
   }
-
-  
 }
 
 
@@ -124,7 +119,6 @@ function ballMove() {
  * Determine What Ball Bounces Off, Score Points, Reset Ball
  */
 function ballBoundaries() {
-  
   // Bounce off player paddle (bottom)
   if (ballY > canvasHeight - paddleDiff) {
     if (ballX > paddlePlayerX && ballX < paddlePlayerX + paddleWidth) {
@@ -202,10 +196,44 @@ function animate() {
   ballMove();
   ballBoundaries();
   computerAI();
-  window.requestAnimationFrame(animate);
+  gameOver();
+  if (!isGameOver) {
+    window.requestAnimationFrame(animate);
+  }
+}
 
-  console.log(paddleComputerX)
 
+/**
+ * Show Winner
+ */
+function showGameOverEl(winner) {
+  // Hide Canvas
+  canvas.hidden = true;
+  // Container
+  gameOverEl.textContent = '';
+  gameOverEl.classList.add('game-over-container');
+  // Title
+  const title = document.createElement('h1');
+  title.textContent = `${winner} Wins!`;
+  // Button
+  const playAgainBtn = document.createElement('button');
+  playAgainBtn.setAttribute('onclick', 'startGame()');
+  playAgainBtn.textContent = 'Play Again';
+  // Append
+  gameOverEl.append(title, playAgainBtn);
+  body.appendChild(gameOverEl);
+}
+
+/**
+ * Check If One Player Has Winning Score, If They Do, End Game
+ */
+function gameOver() {
+  if (playerScore === winningScore || computerScore === winningScore) {
+    isGameOver = true;
+    // Set Winner
+    const winner = playerScore === winningScore ? 'Player 1' : 'Computer';
+    showGameOverEl(winner);
+  }
 }
 
 
@@ -213,6 +241,14 @@ function animate() {
  * Start Game, Reset Everything
  */
 function startGame() {
+  if (isGameOver && !isNewGame) {
+    body.removeChild(gameOverEl);
+    canvas.hidden = false;
+  }
+
+  isGameOver = false;
+  isNewGame = false;
+
   computerScore = 0;
   playerScore = 0;
 
@@ -231,6 +267,8 @@ function startGame() {
     if (paddlePlayerX > canvasWidth - paddleWidth) {
       paddlePlayerX = canvasWidth - paddleWidth;
     }
+     // Hide Cursor
+     canvas.style.cursor = 'none';
 
   })
 
